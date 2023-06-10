@@ -6,7 +6,7 @@ export async function userPost(req: Request, res: Response){
     const {nome, password, email} = req.body;
     
     try{
-        console.log('passou1');
+        
         const user = await userService.createUser({nome, email, password});
         
        

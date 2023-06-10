@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import { Request, Response, NextFunction } from 'express';
 
-import erros from '../erros';
+import erros from '../errors';
 import 'dotenv/config';
 
 type JWTPayload = {

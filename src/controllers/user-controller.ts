@@ -8,7 +8,7 @@ export async function userPost(req: Request, res: Response){
     try{
         console.log('passou1');
         const user = await userService.createUser({nome, email, password});
-        console.log(user);
+        
        
         return res.status(httpStatus.CREATED).json({
             id: user.id,

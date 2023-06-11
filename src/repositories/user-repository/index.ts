@@ -1,3 +1,4 @@
+
 import prisma from '../../configs/database.connection';
 
 async function createUser(data: prisma.usuariosCreateInput) {

@@ -1,21 +1,25 @@
-import { categoria_produto } from "@prisma/client";
-import registerRepository from "../../repositories/category-repository";
-import { notFoundError } from "../../errors/not-found-error";
+import { categoria_produto } from '@prisma/client';
 
+import { notFoundError } from '../../errors/not-found-error';
+import registerRepository from '../../repositories/category-repository';
 
-async function createCategory(params: CreateCategoryParams ){
-    const category = await registerRepository.registerCategory(params.nome);
-    if (!category) throw notFoundError();
+async function createCategory(params: CreateCategoryParams) {
+  const category = await registerRepository.registerCategory(params.nome);
+  if (!category) throw notFoundError();
 
-    return category;
+  return category;
 }
 
+async function getAllCategories(): Promise<categoria_produto[]> {
+  const categories = await registerRepository.getAllCategories();
+  return categories;
+}
 
-export type CreateCategoryParams = {nome: string}
+export type CreateCategoryParams = { nome: string };
 
 const categoryService = {
-    createCategory
-}
+  createCategory,
+  getAllCategories
+};
 
-
-    export default categoryService;
+export default categoryService;

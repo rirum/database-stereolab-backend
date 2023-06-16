@@ -4,6 +4,7 @@ import { Router } from 'express';
 // import router3 from './router3';
 import { userRouter } from './user-router';
 import { authRouter } from './auth-router';
+import { categoryRouter } from './category-router';
 
 const routes = Router();
 // routes.use('/example1', router1);
@@ -11,5 +12,6 @@ const routes = Router();
 // routes.use('/example3', router3);
 routes.use('/user', userRouter);
 routes.use('/sign-in', authRouter);
+routes.use('/category', categoryRouter);
 
 export default routes;

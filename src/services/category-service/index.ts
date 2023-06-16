@@ -1,4 +1,5 @@
 import { categoria_produto } from '@prisma/client';
+import { remove } from 'diacritics';
 
 import { notFoundError } from '../../errors/not-found-error';
 import registerRepository from '../../repositories/category-repository';
@@ -15,11 +16,17 @@ async function getAllCategories(): Promise<categoria_produto[]> {
   return categories;
 }
 
+async function findCategory(nome: string) {
+  const findCategory = await registerRepository.findCategory(nome);
+  return findCategory;
+}
+
 export type CreateCategoryParams = { nome: string };
 
 const categoryService = {
   createCategory,
-  getAllCategories
+  getAllCategories,
+  findCategory
 };
 
 export default categoryService;

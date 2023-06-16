@@ -22,3 +22,18 @@ export async function getAllCategories(req: Request, res: Response) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }
+
+export async function findCategory(req: Request, res: Response) {
+  const { nome } = req.params;
+
+  try {
+    const find = await categoryService.findCategory(nome);
+    if (find) {
+      return res.status(httpStatus.CONFLICT).send({ message: 'Essa categoria já existe' });
+    } else {
+      return res.status(httpStatus.OK).send({ message: 'Categoria disponível' });
+    }
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
+  }
+}

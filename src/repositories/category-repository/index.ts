@@ -7,18 +7,17 @@ import { AlreadyExists } from '../../errors/already-exists';
 async function registerCategory(nome: string) {
   const normalizedCategoryName = diacritics.remove(nome.toLowerCase());
 
-  for (let i = 0; i < normalizedCategoryName.length; i++) {
-    const character = normalizedCategoryName[i];
+  // for (let i = 0; i < normalizedCategoryName.length; i++) {
+  //   const character = normalizedCategoryName[i];
 
-    const existingCategory = await prisma.categoria_produto.findUnique({
-      where: {
-        nome: character
-      }
-    });
-
-    if (existingCategory) {
-      throw AlreadyExists();
+  const existingCategory = await prisma.categoria_produto.findUnique({
+    where: {
+      nome: normalizedCategoryName
     }
+  });
+
+  if (existingCategory) {
+    throw AlreadyExists();
   }
 
   const category = await prisma.categoria_produto.create({

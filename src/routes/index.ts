@@ -1,10 +1,12 @@
 import { Router } from 'express';
+
 // import router1 from './router1';
 // import router2 from './router2';
 // import router3 from './router3';
-import { userRouter } from './user-router';
 import { authRouter } from './auth-router';
 import { categoryRouter } from './category-router';
+import { userRouter } from './user-router';
+import { vehicleRouter } from './vehicle-router';
 
 const routes = Router();
 // routes.use('/example1', router1);
@@ -13,5 +15,6 @@ const routes = Router();
 routes.use('/user', userRouter);
 routes.use('/sign-in', authRouter);
 routes.use('/category', categoryRouter);
+routes.use('/vehicle', vehicleRouter);
 
 export default routes;

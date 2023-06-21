@@ -4,7 +4,7 @@ import diacritics from 'diacritics';
 import prisma from '../../configs/database.connection';
 import { AlreadyExists } from '../../errors/already-exists';
 
-async function registerBrand(nome: string, imagem?: string) {
+async function registerBrand(imagem?: string, nome: string) {
   const normalizedCategoryName = diacritics.remove(nome.toLowerCase());
 
   const existingCategory = await prisma.marca_carro.findUnique({

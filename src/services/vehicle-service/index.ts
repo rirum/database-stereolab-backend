@@ -26,11 +26,19 @@ async function getAllBrands(): Promise<marca_carro[]> {
   return brands;
 }
 
+async function registerModel(params: CreateModelParams) {
+  const { nome, marcaId, imagem } = params;
+  const model = await vehicleRepository.registerModel(params);
+  if (!model) throw notFoundError();
+  return model;
+}
 export type CreateBrandParams = { imagem?: string; nome: string };
+export type CreateModelParams = { imagem?: string; nome: string; marca_id: number };
 
 const vehicleService = {
   createBrand,
-  getAllBrands
+  getAllBrands,
+  registerModel
 };
 
 export default vehicleService;

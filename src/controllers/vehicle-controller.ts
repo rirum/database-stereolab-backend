@@ -27,3 +27,18 @@ export async function getAllBrands(req: Request, res: Response) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }
+
+export async function registerModel(req: Request, res: Response) {
+  const { imagem, nome, marca_id } = req.body;
+
+  try {
+    const result = await vehicleService.registerModel({ imagem, nome, marca_id });
+    return res.status(httpStatus.OK).send(result);
+  } catch (error) {
+    if (error.name === 'AlreadyExists') {
+      return res.status(httpStatus.CONFLICT).send({ message: 'Model already exists' });
+    } else {
+      return res.status(httpStatus.BAD_REQUEST).send({});
+    }
+  }
+}

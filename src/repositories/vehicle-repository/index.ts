@@ -1,4 +1,4 @@
-import { marca_carro } from '@prisma/client';
+import { marca_carro, modelo_carro } from '@prisma/client';
 import diacritics from 'diacritics';
 
 import prisma from '../../configs/database.connection';
@@ -31,9 +31,40 @@ async function getAllBrands(): Promise<marca_carro[]> {
   return brands;
 }
 
+async function registerModel(imagem?: string, nome: string, marca_id: number): Promise<marca_carro> {
+  const normalizedModelName = diacritics.remove(nome.toLowerCase());
+  console.log('passou1');
+  const existingModel = await prisma.modelo_carro.findUnique({
+    where: {
+      nome: normalizedModelName
+    }
+  });
+
+  if (existingModel) {
+    throw AlreadyExists();
+  }
+
+  const model = await prisma.modelo_carro.create({
+    data: {
+      imagem,
+      nome: normalizedModelName,
+      marca_id
+    }
+  });
+  console.log('passou');
+  return model;
+}
+
+type CreateModeloCarroParams = {
+  nome: string;
+  marca_id: number;
+  imagem?: string;
+};
+
 const vehicleRepository = {
   registerBrand,
-  getAllBrands
+  getAllBrands,
+  registerModel
 };
 
 export default vehicleRepository;

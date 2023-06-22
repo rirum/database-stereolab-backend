@@ -94,6 +94,7 @@ model versao_carro {
   nome         String       @unique(map: "versao_carro_nome_unique")
   ano          Int
   modelo_id    Int
+  imagem       String?
   produto      produto[]
   modelo_carro modelo_carro @relation(fields: [modelo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_carro_modelo_id_foreign")
 }

@@ -1,4 +1,4 @@
-import { marca_carro, modelo_carro } from '@prisma/client';
+import { marca_carro, modelo_carro, versao_carro } from '@prisma/client';
 import diacritics from 'diacritics';
 
 import prisma from '../../configs/database.connection';
@@ -59,10 +59,39 @@ async function registerModel(nome: string, marcaId: number, imagem?: string): Pr
   return model;
 }
 
+async function registerVersion(nome: string, modeloId: number, imagem?: string): Promise<versao_carro> {
+  const normalizedVersionName = diacritics.remove(nome.toLowerCase());
+
+  const existingVersion = await prisma.versao_carro.findUnique({
+    where: {
+      nome: normalizedVersionName
+    }
+  });
+
+  if (existingVersion) {
+    return 'AlreadyExists';
+  }
+
+  const version = await prisma.versao_carro.create({
+    data: {
+      imagem,
+      nome: normalizedVersionName,
+      modelo_carro: {
+        connect: {
+          id: modeloId
+        }
+      }
+    }
+  });
+
+  return version;
+}
+
 const vehicleRepository = {
   registerBrand,
   getAllBrands,
-  registerModel
+  registerModel,
+  registerVersion
 };
 
 export default vehicleRepository;

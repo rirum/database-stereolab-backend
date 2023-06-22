@@ -31,9 +31,9 @@ async function getAllBrands(): Promise<marca_carro[]> {
   return brands;
 }
 
-async function registerModel(imagem?: string, nome: string, marca_id: number): Promise<marca_carro> {
+async function registerModel(nome: string, marcaId: number, imagem?: string): Promise<modelo_carro> {
   const normalizedModelName = diacritics.remove(nome.toLowerCase());
-  console.log('passou1');
+
   const existingModel = await prisma.modelo_carro.findUnique({
     where: {
       nome: normalizedModelName
@@ -41,25 +41,23 @@ async function registerModel(imagem?: string, nome: string, marca_id: number): P
   });
 
   if (existingModel) {
-    throw AlreadyExists();
+    return 'AlreadyExists';
   }
 
   const model = await prisma.modelo_carro.create({
     data: {
       imagem,
       nome: normalizedModelName,
-      marca_id
+      marca_carro: {
+        connect: {
+          id: marcaId
+        }
+      }
     }
   });
-  console.log('passou');
+
   return model;
 }
-
-type CreateModeloCarroParams = {
-  nome: string;
-  marca_id: number;
-  imagem?: string;
-};
 
 const vehicleRepository = {
   registerBrand,

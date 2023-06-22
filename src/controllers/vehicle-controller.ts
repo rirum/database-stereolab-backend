@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 
 import { Request, Response } from 'express';
 
+import { AlreadyExists } from '../errors/already-exists';
 import vehicleService from '../services/vehicle-service';
 
 export async function createBrand(req: Request, res: Response) {
@@ -29,16 +30,15 @@ export async function getAllBrands(req: Request, res: Response) {
 }
 
 export async function registerModel(req: Request, res: Response) {
-  const { imagem, nome, marca_id } = req.body;
+  const { nome, marcaId, imagem } = req.body;
 
   try {
-    const result = await vehicleService.registerModel({ imagem, nome, marca_id });
+    const result = await vehicleService.registerModel({ nome, marcaId, imagem });
+    if (result === 'AlreadyExists') {
+      return res.status(httpStatus.CONFLICT).send({ message: 'Model already exists' });
+    }
     return res.status(httpStatus.OK).send(result);
   } catch (error) {
-    if (error.name === 'AlreadyExists') {
-      return res.status(httpStatus.CONFLICT).send({ message: 'Model already exists' });
-    } else {
-      return res.status(httpStatus.BAD_REQUEST).send({});
-    }
+    return res.status(httpStatus.BAD_REQUEST).send({});
   }
 }

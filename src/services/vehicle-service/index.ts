@@ -1,4 +1,4 @@
-import { marca_carro } from '@prisma/client';
+import { marca_carro, modelo_carro, versao_carro } from '@prisma/client';
 
 import { notFoundError } from '../../errors/not-found-error';
 import vehicleRepository from '../../repositories/vehicle-repository';
@@ -35,9 +35,25 @@ async function registerModel(params: CreateModelParams) {
     console.log(error);
   }
 }
+async function getAllModels(): Promise<modelo_carro[]> {
+  const models = await vehicleRepository.getAllModels();
+  return models;
+}
+
+async function getAllVersions(): Promise<versao_carro[]> {
+  const versions = await vehicleRepository.getAllVersions();
+  return versions;
+}
+
 async function registerVersion(params: CreateVersionsParams) {
   try {
-    const version = await vehicleRepository.registerVersion(params.nome, params.modeloId, params.ano, params.imagem);
+    const version = await vehicleRepository.registerVersion(
+      params.nome,
+      params.modeloId,
+      params.ano,
+      params.observacoes,
+      params.imagem
+    );
     if (!version) throw notFoundError();
     return version;
   } catch (error) {
@@ -46,13 +62,21 @@ async function registerVersion(params: CreateVersionsParams) {
 }
 export type CreateBrandParams = { imagem?: string; nome: string };
 export type CreateModelParams = { imagem?: string; nome: string; marcaId: number };
-export type CreateVersionsParams = { imagem?: string; nome: string; modeloId: number; ano: number };
+export type CreateVersionsParams = {
+  imagem?: string;
+  nome: string;
+  modeloId: number;
+  ano: number;
+  observacoes?: string;
+};
 
 const vehicleService = {
   createBrand,
   getAllBrands,
   registerModel,
-  registerVersion
+  getAllModels,
+  registerVersion,
+  getAllVersions
 };
 
 export default vehicleService;

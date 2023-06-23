@@ -59,7 +59,18 @@ async function registerModel(nome: string, marcaId: number, imagem?: string): Pr
   return model;
 }
 
-async function registerVersion(nome: string, modeloId: number, ano: number, imagem?: string): Promise<versao_carro> {
+async function getAllModels(): Promise<modelo_carro[]> {
+  const models = await prisma.modelo_carro.findMany();
+  return models;
+}
+
+async function registerVersion(
+  nome: string,
+  modeloId: number,
+  ano: number,
+  observacoes?: string,
+  imagem?: string
+): Promise<versao_carro> {
   const normalizedVersionName = diacritics.remove(nome.toLowerCase());
 
   const existingVersion = await prisma.versao_carro.findUnique({
@@ -77,6 +88,7 @@ async function registerVersion(nome: string, modeloId: number, ano: number, imag
       imagem,
       nome: normalizedVersionName,
       ano,
+      observacoes,
       modelo_carro: {
         connect: {
           id: modeloId
@@ -88,11 +100,18 @@ async function registerVersion(nome: string, modeloId: number, ano: number, imag
   return version;
 }
 
+async function getAllVersions(): Promise<versao_carro[]> {
+  const versions = await prisma.versao_carro.findMany();
+  return versions;
+}
+
 const vehicleRepository = {
   registerBrand,
   getAllBrands,
   registerModel,
-  registerVersion
+  getAllModels,
+  registerVersion,
+  getAllVersions
 };
 
 export default vehicleRepository;

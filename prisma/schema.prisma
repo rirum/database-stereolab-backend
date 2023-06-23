@@ -95,6 +95,7 @@ model versao_carro {
   ano          Int
   modelo_id    Int
   imagem       String?
+  observacoes  String?
   produto      produto[]
   modelo_carro modelo_carro @relation(fields: [modelo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_carro_modelo_id_foreign")
 }

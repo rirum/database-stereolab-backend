@@ -42,3 +42,17 @@ export async function registerModel(req: Request, res: Response) {
     return res.status(httpStatus.BAD_REQUEST).send({});
   }
 }
+
+export async function registerVersion(req: Request, res: Response) {
+  const { nome, modeloId, ano, imagem } = req.body;
+
+  try {
+    const result = await vehicleService.registerVersion({ nome, modeloId, imagem, ano });
+    if (result === 'AlreadyExists') {
+      return res.status(httpStatus.CONFLICT).send({ message: 'Model already exists' });
+    }
+    return res.status(httpStatus.OK).send(result);
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).send({});
+  }
+}

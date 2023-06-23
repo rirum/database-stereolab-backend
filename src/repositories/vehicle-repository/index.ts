@@ -59,7 +59,7 @@ async function registerModel(nome: string, marcaId: number, imagem?: string): Pr
   return model;
 }
 
-async function registerVersion(nome: string, modeloId: number, imagem?: string): Promise<versao_carro> {
+async function registerVersion(nome: string, modeloId: number, ano: number, imagem?: string): Promise<versao_carro> {
   const normalizedVersionName = diacritics.remove(nome.toLowerCase());
 
   const existingVersion = await prisma.versao_carro.findUnique({
@@ -76,6 +76,7 @@ async function registerVersion(nome: string, modeloId: number, imagem?: string):
     data: {
       imagem,
       nome: normalizedVersionName,
+      ano,
       modelo_carro: {
         connect: {
           id: modeloId

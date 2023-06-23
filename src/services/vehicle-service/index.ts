@@ -35,13 +35,24 @@ async function registerModel(params: CreateModelParams) {
     console.log(error);
   }
 }
+async function registerVersion(params: CreateVersionsParams) {
+  try {
+    const version = await vehicleRepository.registerVersion(params.nome, params.modeloId, params.ano, params.imagem);
+    if (!version) throw notFoundError();
+    return version;
+  } catch (error) {
+    console.log(error);
+  }
+}
 export type CreateBrandParams = { imagem?: string; nome: string };
 export type CreateModelParams = { imagem?: string; nome: string; marcaId: number };
+export type CreateVersionsParams = { imagem?: string; nome: string; modeloId: number; ano: number };
 
 const vehicleService = {
   createBrand,
   getAllBrands,
-  registerModel
+  registerModel,
+  registerVersion
 };
 
 export default vehicleService;

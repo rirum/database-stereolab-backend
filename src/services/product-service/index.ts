@@ -4,8 +4,10 @@ import { CreateProductParams } from '../../@types/product.type';
 import { notFoundError } from '../../errors/not-found-error';
 import productRepository from '../../repositories/product-repository';
 
-async function createProduct(params: CreateProductParams) {
-  const product = await productRepository.createProduct(params.nome, params);
+async function createProduct(productName: string, params: CreateProductParams) {
+  console.log('service');
+  const product = await productRepository.createProduct(productName, params);
+  console.log('passou34');
 
   if (!product) throw notFoundError();
 

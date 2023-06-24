@@ -5,6 +5,8 @@ import { Router } from 'express';
 // import router3 from './router3';
 import { authRouter } from './auth-router';
 import { categoryRouter } from './category-router';
+import { fitForRouter } from './fitFor-router';
+import { productRouter } from './product-router';
 import { userRouter } from './user-router';
 import { vehicleRouter } from './vehicle-router';
 
@@ -16,5 +18,7 @@ routes.use('/user', userRouter);
 routes.use('/sign-in', authRouter);
 routes.use('/category', categoryRouter);
 routes.use('/vehicle', vehicleRouter);
+routes.use('/product', productRouter);
+routes.use('/fitfor', fitForRouter);
 
 export default routes;

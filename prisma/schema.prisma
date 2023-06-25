@@ -7,29 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model acessorios {
-  id                            Int       @id @default(autoincrement())
-  nome                          String?
-  codigo_acessorio              String?
-  marca_acessorio               String?
-  codigo_fabricante_acessorio   String?
-  codigo_fabricante_acessorio_2 String?
-  codigo_fabricante_acessorio_3 String?
-  imagem                        String?
-  imagem2                       String?
-  imagem3                       String?
-  medidas                       String?
-  link                          String?
-  instalada                     String?
-  produto                       produto[]
-}
-
-model aplicacoes {
-  id      Int       @id @default(autoincrement())
-  nome    String?
-  produto produto[]
-}
-
 model categoria_produto {
   id      Int       @id @default(autoincrement())
   nome    String    @unique(map: "categoria_produto_nome_unique")
@@ -58,26 +35,19 @@ model produto {
   codigo_produto       String
   marca_produto        String
   codigo_fabricante    String
-  codigo_fabricante_3  String?
-  codigo_fabricante_2  String?
   categoria_produto_id Int
-  aplicacoes_id        Int
-  createdAt            DateTime          @db.Timestamptz(0)
-  updatedAt            DateTime          @db.Timestamptz(0)
   observacoes          String?
-  acessorios_id        Int
-  precoFinal           Decimal?          @db.Decimal(8, 2)
-  precoCusto           Decimal?          @db.Decimal(8, 2)
   imagem               String?
-  imagem2              String?
   link                 String?
-  imagem3              String?
-  instalada            String?
-  medidas              String?
-  acessorios           acessorios        @relation(fields: [acessorios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "produto_acessorios_id_foreign")
-  aplicacoes           aplicacoes        @relation(fields: [aplicacoes_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "produto_aplicacoes_id_foreign")
   categoria_produto    categoria_produto @relation(fields: [categoria_produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "produto_categoria_produto_id_foreign")
-  versoes_carro        versao_carro[]    @relation("versao_carro_produto")
+  versao_produtos      versao_produtos[]
+}
+
+model sessao {
+  id       Int      @id @default(autoincrement())
+  user_id  Int
+  token    String
+  usuarios usuarios @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sessao_user_id_foreign")
 }
 
 model usuarios {
@@ -89,19 +59,19 @@ model usuarios {
 }
 
 model versao_carro {
-  id           Int          @id @default(autoincrement())
-  nome         String       @unique(map: "versao_carro_nome_unique")
-  ano          Int
-  modelo_id    Int
-  imagem       String?
-  observacoes  String?
-  produtos     produto[]    @relation("versao_carro_produto")
-  modelo_carro modelo_carro @relation(fields: [modelo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_carro_modelo_id_foreign")
+  id              Int               @id @default(autoincrement())
+  nome            String            @unique(map: "versao_carro_nome_unique")
+  ano             Int
+  modelo_id       Int
+  imagem          String?
+  modelo_carro    modelo_carro      @relation(fields: [modelo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_carro_modelo_id_foreign")
+  versao_produtos versao_produtos[]
 }
 
-model sessao {
-  id       Int      @id @default(autoincrement())
-  user_id  Int
-  token    String
-  usuarios usuarios @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sessao_user_id_foreign")
+model versao_produtos {
+  id           Int          @id @default(autoincrement())
+  versao_id    Int
+  produto_id   Int
+  produto      produto      @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_produtos_produto_id_foreign")
+  versao_carro versao_carro @relation(fields: [versao_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "versao_produtos_versao_id_foreign")
 }

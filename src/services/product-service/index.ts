@@ -1,12 +1,12 @@
-import { produto } from '@prisma/client';
 
-import { CreateProductParams } from '../../@types/product.type';
+
+
 import { notFoundError } from '../../errors/not-found-error';
 import productRepository from '../../repositories/product-repository';
 
-async function createProduct(productName: string, params: CreateProductParams) {
+async function createProduct(nome: string, codigoProduto: string, marcaProduto: string, codigoFabricante: string, categoriaProdutoId: number, versaoCarroId: number) {
   console.log('service');
-  const product = await productRepository.createProduct(productName, params);
+  const product = await productRepository.createProduct(nome, codigoProduto, marcaProduto, codigoFabricante, categoriaProdutoId, versaoCarroId );
   console.log('passou34');
 
   if (!product) throw notFoundError();

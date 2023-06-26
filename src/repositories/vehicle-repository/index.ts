@@ -64,6 +64,13 @@ async function getAllModels(): Promise<modelo_carro[]> {
   return models;
 }
 
+async function getModelsByVehicleId(vehicleId: number){
+  const models = await prisma.modelo_carro.findMany({
+    where: {marca_id: vehicleId}
+  })
+  return models;
+}
+
 async function registerVersion(
   nome: string,
   modeloId: number,
@@ -110,6 +117,7 @@ const vehicleRepository = {
   getAllBrands,
   registerModel,
   getAllModels,
+  getModelsByVehicleId,
   registerVersion,
   getAllVersions
 };

@@ -52,6 +52,18 @@ export async function getAllModels(req: Request, res: Response) {
   }
 }
 
+export async function getModelsByVehicleId(req: Request, res: Response){
+  const vehicleId = req.params.id;
+  const numberVehicleId = Number(vehicleId);
+  try{
+    const models = await vehicleService.getModelByVehicleId(numberVehicleId);
+    console.log(models)
+    return res.status(httpStatus.OK).send(models);
+  }catch(error){
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
+  }
+}
+
 export async function registerVersion(req: Request, res: Response) {
   const { nome, modeloId, ano, imagem, observacoes } = req.body;
 

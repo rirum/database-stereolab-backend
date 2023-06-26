@@ -40,6 +40,12 @@ async function getAllModels(): Promise<modelo_carro[]> {
   return models;
 }
 
+async function getModelByVehicleId(vehicleId:number){
+const models = await vehicleRepository.getModelsByVehicleId(vehicleId);
+
+return models;
+}
+
 async function getAllVersions(): Promise<versao_carro[]> {
   const versions = await vehicleRepository.getAllVersions();
   return versions;
@@ -75,6 +81,7 @@ const vehicleService = {
   getAllBrands,
   registerModel,
   getAllModels,
+  getModelByVehicleId,
   registerVersion,
   getAllVersions
 };

@@ -57,7 +57,7 @@ export async function getModelsByVehicleId(req: Request, res: Response){
   const numberVehicleId = Number(vehicleId);
   try{
     const models = await vehicleService.getModelByVehicleId(numberVehicleId);
-    console.log(models)
+    
     return res.status(httpStatus.OK).send(models);
   }catch(error){
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
@@ -83,6 +83,19 @@ export async function getAllVersions(req: Request, res: Response) {
     const versions = await vehicleService.getAllVersions();
     return res.status(httpStatus.OK).send(versions);
   } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
+  }
+}
+
+export async function getVersionByModelId(req: Request, res: Response){
+  const marcaId = req.params.id;
+  console.log(marcaId)
+  const numberModelId = Number(marcaId);
+  try{
+    const version = await vehicleService.getModelByVehicleId(numberModelId);
+    console.log(version)
+    return res.status(httpStatus.OK).send(version);
+  }catch(error){
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }

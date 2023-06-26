@@ -7,7 +7,8 @@ import {
   registerModel,
   registerVersion,
   getAllVersions,
-  getModelsByVehicleId
+  getModelsByVehicleId,
+  getVersionByModelId
 } from '../controllers/vehicle-controller';
 
 const vehicleRouter = Router();
@@ -19,5 +20,6 @@ vehicleRouter.get('/model', getAllModels);
 vehicleRouter.get('/model/:id', getModelsByVehicleId)
 vehicleRouter.post('/model/version', registerVersion);
 vehicleRouter.get('/model/version', getAllVersions);
+vehicleRouter.get('/model/version/:id', getVersionByModelId)
 
 export { vehicleRouter };

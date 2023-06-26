@@ -51,6 +51,13 @@ async function getAllVersions(): Promise<versao_carro[]> {
   return versions;
 }
 
+async function getVersionByModelId(marcaId:number){
+  const models = await vehicleRepository.getVersionByModelId(marcaId);
+  
+  return models;
+  }
+  
+
 async function registerVersion(params: CreateVersionsParams) {
   try {
     const version = await vehicleRepository.registerVersion(
@@ -83,7 +90,8 @@ const vehicleService = {
   getAllModels,
   getModelByVehicleId,
   registerVersion,
-  getAllVersions
+  getAllVersions,
+  getVersionByModelId
 };
 
 export default vehicleService;

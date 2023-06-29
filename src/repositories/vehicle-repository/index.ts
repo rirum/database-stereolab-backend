@@ -64,10 +64,10 @@ async function getAllModels(): Promise<modelo_carro[]> {
   return models;
 }
 
-async function getModelsByVehicleId(vehicleId: number){
+async function getModelsByVehicleId(vehicleId: number) {
   const models = await prisma.modelo_carro.findMany({
-    where: {marca_id: vehicleId}
-  })
+    where: { marca_id: vehicleId }
+  });
   return models;
 }
 
@@ -107,14 +107,13 @@ async function registerVersion(
   return version;
 }
 
-async function getVersionByModelId(marcaId: number){
+async function getVersionByModelId(marcaId: number) {
   const models = await prisma.versao_carro.findMany({
-    where: {modelo_id: marcaId}
-  })
-  
+    where: { modelo_id: marcaId }
+  });
+
   return models;
 }
-
 
 async function getAllVersions(): Promise<versao_carro[]> {
   const versions = await prisma.versao_carro.findMany();

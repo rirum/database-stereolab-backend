@@ -52,14 +52,14 @@ export async function getAllModels(req: Request, res: Response) {
   }
 }
 
-export async function getModelsByVehicleId(req: Request, res: Response){
+export async function getModelsByVehicleId(req: Request, res: Response) {
   const vehicleId = req.params.id;
   const numberVehicleId = Number(vehicleId);
-  try{
+  try {
     const models = await vehicleService.getModelByVehicleId(numberVehicleId);
-    
+
     return res.status(httpStatus.OK).send(models);
-  }catch(error){
+  } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }
@@ -80,6 +80,7 @@ export async function registerVersion(req: Request, res: Response) {
 
 export async function getAllVersions(req: Request, res: Response) {
   try {
+    console.log('controller');
     const versions = await vehicleService.getAllVersions();
     return res.status(httpStatus.OK).send(versions);
   } catch (error) {
@@ -87,15 +88,15 @@ export async function getAllVersions(req: Request, res: Response) {
   }
 }
 
-export async function getVersionByModelId(req: Request, res: Response){
+export async function getVersionByModelId(req: Request, res: Response) {
   const marcaId = req.params.id;
-  console.log(marcaId)
+  console.log(marcaId);
   const numberModelId = Number(marcaId);
-  try{
+  try {
     const version = await vehicleService.getModelByVehicleId(numberModelId);
-    console.log(version)
+    console.log(version);
     return res.status(httpStatus.OK).send(version);
-  }catch(error){
+  } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }

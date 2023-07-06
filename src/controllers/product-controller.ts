@@ -2,22 +2,13 @@ import httpStatus from 'http-status';
 
 import { Request, Response } from 'express';
 
-
 import productService from '../services/product-service';
 
-
 export async function createProduct(req: Request, res: Response) {
-  const {
-    nome,
-    codigoProduto,
-    marcaProduto,
-    codigoFabricante,
-    categoriaProdutoId,
-    versaoCarroId
-  } = req.body;
+  const { nome, codigoProduto, marcaProduto, codigoFabricante, categoriaProdutoId, versaoCarroId } = req.body;
 
   try {
-    const product = await productService.createProduct( 
+    const product = await productService.createProduct(
       nome,
       codigoProduto,
       marcaProduto,
@@ -36,33 +27,30 @@ export async function createProduct(req: Request, res: Response) {
   }
 }
 export async function getAllProducts(req: Request, res: Response) {
-  try{
+  try {
     const products = await productService.getAllProducts();
     return res.status(httpStatus.OK).send(products);
-  }catch(error){
+  } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).send({});
   }
 }
 
-export async function updateProduct(req: Request, res:Response) {
-  const { productId, updatedData} = req.body;
-  try{
+export async function updateProduct(req: Request, res: Response) {
+  const { productId, updatedData } = req.body;
+  try {
     const update = await productService.updateProduct(productId, updatedData);
-    return res.status(httpStatus.OK).send(update)
-  }catch(error){
-    
+    return res.status(httpStatus.OK).send(update);
+  } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).send({});
   }
-  
 }
 
-export async function deletedProduct(req: Request, res:Response) {
-  const {productId} = req.body;
-  try{
+export async function deletedProduct(req: Request, res: Response) {
+  const { productId } = req.body;
+  try {
     const deleted = await productService.deletedProduct(productId);
     return res.status(httpStatus.OK).send(deleted);
-  }catch(error){
+  } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).send({});
   }
-  
 }

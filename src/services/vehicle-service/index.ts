@@ -46,12 +46,6 @@ async function getModelByVehicleId(vehicleId: number) {
   return models;
 }
 
-async function getAllVersions(): Promise<versao_carro[]> {
-  const versions = await vehicleRepository.getAllVersions();
-
-  return versions;
-}
-
 async function getVersionByModelId(marcaId: number) {
   const models = await vehicleRepository.getVersionByModelId(marcaId);
 
@@ -74,6 +68,13 @@ async function registerVersion(params: CreateVersionsParams) {
   }
 }
 
+//erro
+async function getAllVersions(): Promise<versao_carro[]> {
+  console.log('service');
+  const versions = await vehicleRepository.getAllVersions();
+
+  return versions;
+}
 export type CreateBrandParams = { imagem?: string; nome: string };
 export type CreateModelParams = { imagem?: string; nome: string; marcaId: number };
 export type CreateVersionsParams = {

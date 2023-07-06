@@ -107,17 +107,19 @@ async function registerVersion(
   return version;
 }
 
+//erro
+async function getAllVersions(): Promise<versao_carro[]> {
+  console.log('repository');
+  const versions = await prisma.versao_carro.findMany();
+  return versions;
+}
+
 async function getVersionByModelId(marcaId: number) {
   const models = await prisma.versao_carro.findMany({
     where: { modelo_id: marcaId }
   });
 
   return models;
-}
-
-async function getAllVersions(): Promise<versao_carro[]> {
-  const versions = await prisma.versao_carro.findMany();
-  return versions;
 }
 
 const vehicleRepository = {

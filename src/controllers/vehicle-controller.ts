@@ -78,12 +78,13 @@ export async function registerVersion(req: Request, res: Response) {
   }
 }
 
+//erro
 export async function getAllVersions(req: Request, res: Response) {
   try {
-    console.log('controller');
     const versions = await vehicleService.getAllVersions();
     return res.status(httpStatus.OK).send(versions);
   } catch (error) {
+    console.error(error);
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({});
   }
 }
